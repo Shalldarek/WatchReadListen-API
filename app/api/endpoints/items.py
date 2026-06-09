@@ -24,6 +24,7 @@ def get_item(id: int, db: Session=Depends(get_db)):
 def delete_item(id: int, db: Session=Depends(get_db)):
     return crud_item.delete_item(id=id,db=db)
 
-@router.put("/{id}", response_model=ItemUpdate)
-def update_item(id: int, db: Session=Depends(get_db), item_data=ItemUpdate):
-    return crud_item.update_item(id=id, db=db, item_data=item_data)
+@router.put("/{id}", response_model=ItemResponse)
+def update_item_endpoint(id: int, item_data: ItemUpdate, db: Session = Depends(get_db)):
+    updated_item = crud_item.update_item(id=id, db=db, item_data=item_data)
+    return updated_item
