@@ -14,10 +14,18 @@ def get_items(db: Session, skip: int = 0, limit: int = 10):
 
 def get_item(id: int, db: Session):
     item = db.query(Item).filter(Item.id == id).first()
+
+    if not item:
+        return f"Item with id {id} not found"  
+
     return item
 
 def delete_item(id: int, db: Session):
     item = db.query(Item).filter(Item.id == id).first()
+
+    if not item:
+        return "Item not found"  
+
     db.delete(item)
     db.commit()
     db.refresh(item)
@@ -27,7 +35,7 @@ def update_item(id: int, db: Session, item_data: ItemUpdate):
     db_item = db.query(Item).filter(Item.id == id).first()
     
     if not db_item:
-        return None  
+        return "Item not found"  
 
     update_data = item_data.model_dump(exclude_unset=True)
 
