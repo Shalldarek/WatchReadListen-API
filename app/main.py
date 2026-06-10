@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-from app.api.endpoints import items
+from app.api.endpoints import items, pick
 
 app = FastAPI(
     title="WatchReadListenAPI",
@@ -8,6 +8,7 @@ app = FastAPI(
 )
 
 app.include_router(items.router)
+app.include_router(pick.router)
 
 @app.get("/")
 def main_menu():
