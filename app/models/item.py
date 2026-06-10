@@ -1,6 +1,7 @@
 import enum
 from datetime import datetime
-from sqlalchemy import Column, Integer, String, Boolean, Text, DateTime, Enum
+from sqlalchemy import Column, ForeignKey, Integer, String, Boolean, Text, DateTime, Enum
+from sqlalchemy.orm import relationship
 from app.core.database import Base
 
 class ItemType(str, enum.Enum):
@@ -26,3 +27,6 @@ class Item(Base):
     rating = Column(Integer, nullable=True)
     notes = Column(Text, nullable=True)
     created_at = Column(DateTime, default=datetime.now, nullable=False)
+    user_id = Column(Integer, ForeignKey("users.id", ondelete="CASCADE"), nullable=False)
+
+user = relationship("User", back_populates="items")

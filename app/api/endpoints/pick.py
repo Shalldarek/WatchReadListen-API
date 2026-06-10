@@ -1,7 +1,9 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from app.core.database import get_db
+from app.core.dep import get_current_user
 from app.models.item import ItemType
+from app.models.user import User
 from app.schemas.item import ItemResponse
 from app.services.recommender import get_random_picked
 
@@ -13,7 +15,8 @@ router = APIRouter(
 def pick_random_item(
     item_type: ItemType | None = None, 
     mood: str | None = None, 
-    db: Session = Depends(get_db)  
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user)   
 ):
     picked_item = get_random_picked(db=db, item_type=item_type, mood=mood)
     

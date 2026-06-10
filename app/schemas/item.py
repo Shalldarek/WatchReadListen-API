@@ -29,6 +29,7 @@ class ItemResponse(ItemBase):
     rating: Optional[int]
     notes: Optional[str]
     created_at: datetime
+    user_id: int
 
     class Config:
         from_attributes = True
