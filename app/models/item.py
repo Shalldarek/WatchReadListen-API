@@ -28,5 +28,4 @@ class Item(Base):
     notes = Column(Text, nullable=True)
     created_at = Column(DateTime, default=datetime.now, nullable=False)
     user_id = Column(Integer, ForeignKey("users.id", ondelete="CASCADE"), nullable=False)
-
-user = relationship("User", back_populates="items")
+    user = relationship("User", back_populates="items")
